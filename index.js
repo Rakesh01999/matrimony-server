@@ -235,7 +235,7 @@ async function run() {
             const result = await favouriteBiodataCollection.findOne(query);
             res.send(result);
         })
-
+ 
 
         // app.post('/favouriteBiodata', async (req, res) => {
         //     const newFavouriteBiodata = req.body;
