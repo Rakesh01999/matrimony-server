@@ -460,7 +460,7 @@ async function run() {
         });
 
 
-        // --------- counters -------
+        // --------- counters related-------
         app.get('/counters', async (req, res) => {
             try {
                 const totalBiodataCount = await biodataCollection.countDocuments();
