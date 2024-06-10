@@ -509,7 +509,6 @@ async function run() {
 
         //  ----------- stats ------------
 
-        // Modify your existing code inside the run function to include these endpoints
 
         // app.get('/biodata-stats', verifyToken, verifyAdmin, async (req, res) => {
         app.get('/biodata-stats',  async (req, res) => {
