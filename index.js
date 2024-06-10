@@ -405,7 +405,7 @@ async function run() {
             const result = await premReqCollection.find().toArray();
             res.send(result);
         });
- 
+
         // app.get('/premiumRequests/:id', async (req, res) => {
         //     const id = req.params.id;
         //     const query = { _id: new ObjectId(id) }
@@ -415,7 +415,7 @@ async function run() {
 
         // const { ObjectId } = require('mongodb'); // Ensure ObjectId is imported
 
-         
+
         app.get('/premiumRequests/:id', async (req, res) => {
             const id = req.params.id;
             let result;
@@ -506,6 +506,52 @@ async function run() {
             }
         });
 
+
+        //  ----------- stats ------------
+
+        // Modify your existing code inside the run function to include these endpoints
+
+        // Biodata Statistics Endpoint
+        // app.get('/biodata-stats', verifyToken, verifyAdmin, async (req, res) => {
+        app.get('/biodata-stats',  async (req, res) => {
+            try {
+                const totalBiodata = await biodataCollection.countDocuments();
+                const maleBiodata = await biodataCollection.countDocuments({ BiodataType: 'Male' });
+                const femaleBiodata = await biodataCollection.countDocuments({ BiodataType: 'Female' });
+                const premiumBiodata = await premReqCollection.countDocuments({ userType: "premium" });
+                // const contactReqBiodata = await paymentCollection.countDocuments({ status: "approved" });
+                const contactReqBiodata = await paymentCollection.countDocuments();
+
+                res.json({
+                    totalBiodata,
+                    maleBiodata,
+                    femaleBiodata,
+                    premiumBiodata,
+                    contactReqBiodata
+                });
+            } catch (error) {
+                console.error('Error fetching biodata statistics:', error);
+                res.status(500).json({ error: 'Internal server error' });
+            }
+        });
+
+        // Revenue Endpoint
+        // app.get('/revenue', verifyToken, verifyAdmin, async (req, res) => {
+        // app.get('/revenue',  async (req, res) => {
+        //     try {
+        //         const totalRevenue = await paymentCollection.aggregate([
+        //             { $match: { status: 'paid' } }, // Assuming 'paid' is the status for successful payments
+        //             { $group: { _id: null, total: { $sum: '$amount' } } }
+        //         ]).toArray();
+
+        //         res.json({ totalRevenue: totalRevenue[0]?.total || 0 });
+        //     } catch (error) {
+        //         console.error('Error fetching revenue:', error);
+        //         res.status(500).json({ error: 'Internal server error' });
+        //     }
+        // });
+
+        // ----------
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
