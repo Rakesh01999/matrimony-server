@@ -509,7 +509,6 @@ async function run() {
 
         //  ----------- stats ------------
 
-
         // app.get('/biodata-stats', verifyToken, verifyAdmin, async (req, res) => {
         app.get('/biodata-stats',  async (req, res) => {
             try {
@@ -533,7 +532,7 @@ async function run() {
             }
         });
 
-        // Revenue Endpoint
+        // Revenue 
         // app.get('/revenue', verifyToken, verifyAdmin, async (req, res) => {
         // app.get('/revenue',  async (req, res) => {
         //     try {
