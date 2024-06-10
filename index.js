@@ -460,6 +460,27 @@ async function run() {
         });
 
 
+        // --------- counters -------
+        app.get('/counters', async (req, res) => {
+            try {
+                const totalBiodataCount = await biodataCollection.countDocuments();
+                const girlsBiodataCount = await biodataCollection.countDocuments({ BiodataType: 'Female' });
+                const boysBiodataCount = await biodataCollection.countDocuments({ BiodataType: 'Male' });
+                const completedMarriagesCount = await successStoryCollection.countDocuments();
+
+                // console.log(totalBiodataCount,girlsBiodataCount, boysBiodataCount,completedMarriagesCount)
+                res.send({
+                    totalBiodata: totalBiodataCount,
+                    girlsBiodata: girlsBiodataCount,
+                    boysBiodata: boysBiodataCount,
+                    completedMarriages: completedMarriagesCount
+                });
+            } catch (error) {
+                res.status(500).send({ message: 'Failed to fetch counters', error });
+            }
+        });
+ 
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
