@@ -406,6 +406,31 @@ async function run() {
             res.send(result);
         });
 
+        // app.get('/premiumRequests/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: new ObjectId(id) }
+        //     const result = await premReqCollection.findOne(query);
+        //     res.send(result);
+        // });
+
+        // const { ObjectId } = require('mongodb'); // Ensure ObjectId is imported
+
+        app.get('/premiumRequests/:id', async (req, res) => {
+            const id = req.params.id;
+            let result;
+            try {
+                const query = { _id: new ObjectId(id) };
+                result = await premReqCollection.findOne(query);
+                if (!result) {
+                    return res.status(404).send({ message: 'Data not found' });
+                }
+            } catch (error) {
+                return res.status(500).send({ message: 'Internal server error', error });
+            }
+            res.send(result);
+        });
+
+
         app.post('/premiumRequests', async (req, res) => {
             const premiumRequest = req.body;
             const premiumRequestResult = await premReqCollection.insertOne(premiumRequest);
@@ -479,7 +504,7 @@ async function run() {
                 res.status(500).send({ message: 'Failed to fetch counters', error });
             }
         });
- 
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
