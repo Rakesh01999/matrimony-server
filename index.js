@@ -511,7 +511,6 @@ async function run() {
 
         // Modify your existing code inside the run function to include these endpoints
 
-        // Biodata Statistics Endpoint
         // app.get('/biodata-stats', verifyToken, verifyAdmin, async (req, res) => {
         app.get('/biodata-stats',  async (req, res) => {
             try {
