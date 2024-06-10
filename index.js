@@ -508,8 +508,8 @@ async function run() {
 
         //  ----------- stats ------------
 
-        // app.get('/biodata-stats', verifyToken, verifyAdmin, async (req, res) => {
-        app.get('/biodata-stats',  async (req, res) => {
+        app.get('/biodata-stats', verifyToken, verifyAdmin, async (req, res) => {
+        // app.get('/biodata-stats',  async (req, res) => {
             try {
                 const totalBiodata = await biodataCollection.countDocuments();
                 const maleBiodata = await biodataCollection.countDocuments({ BiodataType: 'Male' });
