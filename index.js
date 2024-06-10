@@ -154,6 +154,7 @@ async function run() {
         // ------ biodata api ---------
 
         app.get('/biodatas', async (req, res) => {
+        // app.get('/biodatas',  async (req, res) => {
             const result = await biodataCollection.find().toArray();
             res.send(result);
         });
@@ -220,34 +221,9 @@ async function run() {
             }
         });
 
-        // app.get('/biodatas/:email', async (req, res) => {
-        //     const email = req.params.email;
-        //     const query = { ContactEmail: email };
-        //     // console.log(query);
-        //     try {
-        //         await client.connect();
-        //         const database = client.db('matrimonyDb');
-        //         const biodataCollection = database.collection('biodata');
-
-        //         const biodata = await biodataCollection.findOne(query);
-
-        //         if (biodata) {
-        //             res.json(biodata);
-        //         } else {
-        //             res.status(404).json({ message: 'Biodata not found' });
-        //         }
-        //     } catch (err) {
-        //         console.error(err);
-        //         res.status(500).json({ message: 'Server error' });
-        //     } finally {
-        //         await client.close();
-        //     }
-        // });
-
-
 
         // ---------- favouriteBiodataCollection ---------
-        app.get('/favouriteBiodata', async (req, res) => {
+        app.get('/favouriteBiodata', verifyToken, async (req, res) => {
             const cursor = favouriteBiodataCollection.find();
             const result = await cursor.toArray();
             res.send(result);
